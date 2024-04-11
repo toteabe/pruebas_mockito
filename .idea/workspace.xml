@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c399beb-7381-4adb-ab43-564baa14b56b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/iesvdm/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/iesvdm/dominio/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/MockMethodsTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/MockVsSpyTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/SpyTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/VerifyTest.java" afterDir="false" />
+    <list default="true" id="5c399beb-7381-4adb-ab43-564baa14b56b" name="Changes" comment="inicial">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/iesvdm/dominio/Calculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/iesvdm/dominio/Person.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/iesvdm/dominio/StaticUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/ArgumentCaptorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/ArgumentMatcherTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/MockStaticMethodsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/iesvdm/MockMethodsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/MockMethodsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/iesvdm/VerifyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/VerifyTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +35,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2er4lv2Wzi9KZi4Y9JyIc0ubF3Q" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -57,11 +57,60 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.MockMethodsTest">
+  <component name="RunManager" selected="JUnit.ArgumentMatcherTest.verifyArgmumentMatcher">
+    <configuration name="ArgumentMatcherTest.anyAndEqArgumentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyecto_mockito" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iesvdm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.iesvdm" />
+      <option name="MAIN_CLASS_NAME" value="org.iesvdm.ArgumentMatcherTest" />
+      <option name="METHOD_NAME" value="anyAndEqArgumentTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArgumentMatcherTest.anyArgumentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyecto_mockito" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iesvdm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.iesvdm" />
+      <option name="MAIN_CLASS_NAME" value="org.iesvdm.ArgumentMatcherTest" />
+      <option name="METHOD_NAME" value="anyArgumentTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArgumentMatcherTest.verifyArgmumentMatcher" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyecto_mockito" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iesvdm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.iesvdm" />
+      <option name="MAIN_CLASS_NAME" value="org.iesvdm.ArgumentMatcherTest" />
+      <option name="METHOD_NAME" value="verifyArgmumentMatcher" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MockMethodsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proyecto_mockito" />
       <extension name="coverage">
@@ -92,60 +141,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MockVsSpyTest.doReturnWhen" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proyecto_mockito" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.iesvdm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.iesvdm" />
-      <option name="MAIN_CLASS_NAME" value="org.iesvdm.MockVsSpyTest" />
-      <option name="METHOD_NAME" value="doReturnWhen" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MockVsSpyTest.whenThenReturn_doReturnWhen_mock_sideEffect" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proyecto_mockito" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.iesvdm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.iesvdm" />
-      <option name="MAIN_CLASS_NAME" value="org.iesvdm.MockVsSpyTest" />
-      <option name="METHOD_NAME" value="whenThenReturn_doReturnWhen_mock_sideEffect" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VerifyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proyecto_mockito" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.iesvdm.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.iesvdm" />
-      <option name="MAIN_CLASS_NAME" value="org.iesvdm.VerifyTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ArgumentMatcherTest.verifyArgmumentMatcher" />
+        <item itemvalue="JUnit.ArgumentMatcherTest.anyAndEqArgumentTest" />
+        <item itemvalue="JUnit.ArgumentMatcherTest.anyArgumentTest" />
         <item itemvalue="JUnit.MockMethodsTest" />
         <item itemvalue="JUnit.MockVsSpyTest" />
-        <item itemvalue="JUnit.MockVsSpyTest.doReturnWhen" />
-        <item itemvalue="JUnit.VerifyTest" />
-        <item itemvalue="JUnit.MockVsSpyTest.whenThenReturn_doReturnWhen_mock_sideEffect" />
       </list>
     </recent_temporary>
   </component>
@@ -157,12 +159,27 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712649524267</updated>
-      <workItem from="1712649525551" duration="13758000" />
+      <workItem from="1712649525551" duration="14189000" />
+      <workItem from="1712759577189" duration="4130000" />
+      <workItem from="1712820797394" duration="1980000" />
     </task>
+    <task id="LOCAL-00001" summary="inicial">
+      <option name="closed" value="true" />
+      <created>1712737096178</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712737096178</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="inicial" />
+    <option name="LAST_COMMIT_MESSAGE" value="inicial" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,11 +1,12 @@
 package org.iesvdm;
 
+import org.iesvdm.dominio.Person;
 import org.junit.jupiter.api.Test;
 import org.mockito.exceptions.verification.TooFewActualInvocations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.util.ArrayDeque;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,5 +151,25 @@ public class MockMethodsTest {
 
         verify(listMock).add(anyString());
         assertThat(added).isFalse();
+    }
+
+    @Test
+    void testMockitoVoidReturnMethod() {
+        Person person = mock(Person.class);
+
+        doThrow(IllegalArgumentException.class).when(person).setName(null);
+
+        doAnswer((i) -> {
+            System.out.println("Person setName Argument = " + i.getArgument(0));
+            assertEquals("jose", i.getArgument(0));
+            return null;
+        }).when(person).setName(anyString());
+
+        when(person.getName()).thenReturn("jose");
+
+        assertThrows(IllegalArgumentException.class, () -> person.setName(null));
+
+        person.setName("jose");
+        assertEquals("person", person.getName());
     }
 }

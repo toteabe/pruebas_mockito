@@ -3,11 +3,14 @@ package org.iesvdm;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InOrder;
 import org.mockito.exceptions.verification.NoInteractionsWanted;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,5 +115,46 @@ public class VerifyTest {
 
         final List<String> capturedArgument = argumentCaptor.getValue();
         assertThat(capturedArgument).contains("someElement");
+    }
+
+    @Test
+    void advancedVerifyTest() {
+        List<String> mockList = mock(List.class);
+        mockList.add("Jose");
+        mockList.size();
+
+        verify(mockList).add("Jose");
+        verify(mockList).add(anyString());
+        verify(mockList).add(any(String.class));
+        verify(mockList).add(ArgumentMatchers.any(String.class));
+
+        verify(mockList, times(1)).size();
+        verify(mockList, atLeastOnce()).size();
+        verify(mockList, atMost(2)).size();
+        verify(mockList, atLeast(1)).size();
+        verify(mockList, never()).clear();
+
+        // all interactions are verified, so below will pass
+        verifyNoMoreInteractions(mockList);
+        mockList.isEmpty();
+        // isEmpty() no es verify, luego a continuacion falla verifyNoMoreInteractions
+        // verifyNoMoreInteractions(mockList);
+        Map mockMap = mock(Map.class);
+        Set mockSet = mock(Set.class);
+        verify(mockList).isEmpty();
+
+        verifyNoInteractions(mockList, mockMap, mockSet);
+
+        mockMap.isEmpty();
+        verify(mockMap, only()).isEmpty();
+
+        // verficando el orden de llamada a metodos de mocks
+        // puedes saltarte metodos pero el orden debe mantenerse
+        InOrder inOrder = inOrder(mockList, mockMap);
+        inOrder.verify(mockList).add("Pankaj");
+        inOrder.verify(mockList, calls(1)).size();
+        inOrder.verify(mockList).isEmpty();
+        inOrder.verify(mockMap).isEmpty();
+
     }
 }
