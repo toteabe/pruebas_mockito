@@ -1,6 +1,7 @@
 package org.iesvdm;
 
 import org.iesvdm.dominio.Person;
+import org.iesvdm.dominio.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.exceptions.verification.TooFewActualInvocations;
 import org.mockito.invocation.InvocationOnMock;
@@ -17,6 +18,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import org.mockito.MockSettings;
 
+import javax.script.ScriptException;
+
 public class MockMethodsTest {
 
     @Test
@@ -26,6 +29,12 @@ public class MockMethodsTest {
 
         final boolean added = listMock.add(randomAlphabetic(6));
         assertThat(added).isFalse();
+
+        when(listMock.add("hola")).thenReturn(true);
+
+        final boolean added2 = listMock.add("hola");
+        assertThat(added2).isTrue();
+
     }
 
     @Test
@@ -40,9 +49,11 @@ public class MockMethodsTest {
     @Test
     final void givenMethodIsConfiguredToThrowException_whenCallingMethod_thenExceptionIsThrown() {
         final List listMock = mock(ArrayList.class);
-        when(listMock.add(anyString())).thenThrow(IllegalStateException.class);
+        when(listMock.add(anyString())).thenThrow(ScriptException.class);
 
-        assertThrows(IllegalStateException.class, () -> listMock.add(randomAlphabetic(6)));
+        //when(listMock.clear()).thenThrow(ScriptException.class); //FAIL
+
+        assertThrows(ScriptException.class, () -> listMock.add(randomAlphabetic(6)));
     }
 
     @Test
@@ -88,10 +99,13 @@ public class MockMethodsTest {
 
     @Test
     final void whenMockMethodCallIsConfiguredToCallTheRealMethod_thenRealMethodIsCalled() {
-        final List listMock = mock(ArrayList.class);
-        when(listMock.size()).thenCallRealMethod();
+        final User userMock = mock(User.class);
 
-        assertThat(listMock).hasSize(1);
+        //assertThat(listMock).hasSize(0);
+        when(userMock.getRole()).thenCallRealMethod();
+
+        assertThat(userMock.getRole()).isNull(); //se ejecuta la llamada real, pero el objeto
+
     }
 
     @Test

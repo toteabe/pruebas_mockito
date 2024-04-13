@@ -59,8 +59,8 @@ public class VerifyTest {
     final void givenInteractionsInOrder_whenVerifyingOrderOfInteractions_thenCorrect() {
         final List<String> mockedList = mock(ArrayList.class);
         mockedList.size();
-        mockedList.add("a parameter");
         mockedList.clear();
+        mockedList.add("a parameter");
 
         final InOrder inOrder = inOrder(mockedList);
         inOrder.verify(mockedList).size();
@@ -134,7 +134,7 @@ public class VerifyTest {
         verify(mockList, atLeast(1)).size();
         verify(mockList, never()).clear();
 
-        // all interactions are verified, so below will pass
+        // verificandos que no hay más interacciones de las declaradas en el test hasta este punto
         verifyNoMoreInteractions(mockList);
         mockList.isEmpty();
         // isEmpty() no es verify, luego a continuacion falla verifyNoMoreInteractions

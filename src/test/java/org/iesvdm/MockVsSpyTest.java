@@ -14,35 +14,46 @@ import java.io.PrintStream;
 public class MockVsSpyTest
 {
     @Test
-    void crearMock() {
+    void createMock() {
         User user = Mockito.mock(User.class);
 
-        //mock crea un doble (double test) vacio
+        //mock crea un doble (test double) vacio
         assertThat(user.getUsername()).isNull();
         assertThat(user.getPassword()).isNull();
         assertThat(user.getRole()).isNull();
     }
 
     @Test
-    void creaSpy(){
-        User user = Mockito.spy(new User("user", "pass", "admin"));
+    void createSpyFromEmptyConstructor(){
+        User user = Mockito.spy(new User());
 
         assertThat(user.getUsername()).isEqualTo("user");
+        assertThat(user.getPassword()).isNull();
+        assertThat(user.getRole()).isNull();
+    }
+
+    @Test
+    void createSpyFromNonEmptyConstructor(){
+        User user = Mockito.spy(new User("jose", "pass", "admin"));
+
+        assertThat(user.getUsername()).isEqualTo("jose");
         assertThat(user.getPassword()).isEqualTo("pass");
         assertThat(user.getRole()).isEqualTo("user");
     }
 
     @Test
     void whenThenReturn(){
-        User user = Mockito.mock(User.class);
+        User user = Mockito.spy(new User("jose", null, "admin"));
 
         //whenThenReturn implementa seguridad de tipo devuelto
-        Mockito.when(user.getUsername()).thenReturn("jose");  //OK
+        Mockito.when(user.getRole()).thenReturn("admin");  //OK
 //        Mockito.when(user.getUsername()).thenReturn(1); //FAIL
 
         assertThat(user.getUsername()).isEqualTo("jose");
         assertThat(user.getPassword()).isNull();
-        assertThat(user.getRole()).isNull();
+        assertThat(user.getRole()).isEqualTo("admin");
+        System.out.println("Después de getRole, pero al ser un mock sin efecto colateral");
+        System.out.println(", es decir, sin mensaje previo de role");
     }
 
     @Test
@@ -54,16 +65,15 @@ public class MockVsSpyTest
         assertThat(user.getPassword()).isEqualTo("1234");
 
         //doReturnWhen no implementa seguridad de tipo devuelto
-        //Mockito.doReturn(true).when(user).getUsername();//FAIL en tiempo de ejecución
+        Mockito.doReturn(true).when(user).getUsername();//FAIL en tiempo de ejecución
                                                                    // , no falla en tiempo de compilación
-        //        assertThat(user.getUsername()).isEqualTo(true);
+                assertThat(user.getUsername()).isEqualTo(true);
 
         //Captura de la exception lanzada por la falta de seguridad en el tipo de doReturnWhen
         assertThatThrownBy( () -> {
                             Mockito.doReturn(true).when(user).getUsername();
                             })
                             .isInstanceOf(WrongTypeOfReturnValue.class);
-
 
     }
 
@@ -80,7 +90,7 @@ public class MockVsSpyTest
         Mockito.when(user.getRole()).thenReturn("root");
         assertThat(user.getRole()).isEqualTo("root");
         //             |
-        //             V ¿se invoca el metodo y por tanto el println interno? No se invoca en un mock ya sea doReturnWhen o doReturnWhen.
+        //             V ¿se invoca el metodo y por tanto el println interno? No se invoca en un mock ya sea whenThenReturn o doReturnWhen.
         String role_access_msg = outputStreamCaptor.toString().trim();
         assertThat(role_access_msg).isNotEqualTo(User.ROLE_ACCESS_MSG); //outputStream NOT EQUAL!
         assertThat(role_access_msg).isEmpty();
@@ -91,7 +101,7 @@ public class MockVsSpyTest
 
         assertThat(user.getRole()).isEqualTo("admin");
         //              |
-        //              V ¿se invoca el metodo y por tanto el println interno? No se invoca en un mock ya sea doReturnWhen o doReturnWhen.
+        //              V ¿se invoca el metodo y por tanto el println interno? No se invoca en un mock ya sea whenThenReturn o doReturnWhen.
         role_access_msg = outputStreamCaptor.toString().trim();
         assertThat(role_access_msg).isNotEqualTo(User.ROLE_ACCESS_MSG); //outputStream NOT EQUAL!
         assertThat(role_access_msg).isEmpty();
@@ -111,7 +121,7 @@ public class MockVsSpyTest
         Mockito.when(user.getRole()).thenReturn("root");
         assertThat(user.getRole()).isEqualTo("root");
         //             |
-        //             V ¿se invoca el metodo y, por tanto, el println interno? Sí se invoca en un spy ya sea doReturnWhen o doReturnWhen.
+        //             V ¿se invoca el metodo y, por tanto, el println interno? Sí se invoca en un spy ya sea whenThenReturn o doReturnWhen.
         String role_access_msg = outputStreamCaptor.toString().trim();
         assertThat(role_access_msg).isEqualTo(User.ROLE_ACCESS_MSG);
         assertThat(role_access_msg).isNotEmpty();
@@ -121,7 +131,7 @@ public class MockVsSpyTest
 
         assertThat(user.getRole()).isEqualTo("admin");
         //              |
-        //              V ¿se invoca el metodo y, por tanto, el println interno? Sí se invoca en un spy ya sea doReturnWhen o doReturnWhen.
+        //              V ¿se invoca el metodo y, por tanto, el println interno? Sí se invoca en un spy ya sea whenThenReturn o doReturnWhen.
         role_access_msg = outputStreamCaptor.toString().trim();
         assertThat(role_access_msg).isEqualTo(User.ROLE_ACCESS_MSG);
         assertThat(role_access_msg).isNotEmpty();
