@@ -1,4 +1,4 @@
-package org.iesvdm;
+package org.iesvdm.dominio;
 
 import static org.assertj.core.api.Assertions.*;
 import static  org.junit.jupiter.api.Assertions.*;
@@ -17,6 +17,7 @@ public class ArgumentMatcherTest {
 
         Person person = mock(Person.class);
 
+        doReturn(false).when(person).readAccess(anyString(), eq(2), anyList());
         when(person.readAccess(anyString(), anyInt(), anyList()))
                 .thenReturn(true);
 
@@ -25,6 +26,10 @@ public class ArgumentMatcherTest {
 
         assertThat(person.readAccess("user", 10, List.of("read", "write" ) ))
                 .isTrue();
+
+        assertThat(person.readAccess("user", 2, List.of("read", "write" ) ))
+                .isFalse();
+
 
     }
 
@@ -44,14 +49,14 @@ public class ArgumentMatcherTest {
         //De AdditionalMatcher
         //              ---------------------
         //                                  V
-        when(person.readAccess(anyString(),lt(3) , anyList()))
+        when(person.readAccess(anyString(),gt(1000) , anyList()))
                 .thenReturn(true);
 
         assertThat(person.readAccess("user", 1000, new ArrayList<>()))
                 .isFalse();
         assertThat(person.readAccess("admin", 1000, new ArrayList<>()))
                 .isTrue();
-        assertThat(person.readAccess("admin", 1000, new ArrayList<>()))
+        assertThat(person.readAccess("admin", 1001, new ArrayList<>()))
                 .isTrue();
 
     }

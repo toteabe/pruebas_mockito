@@ -1,4 +1,4 @@
-package org.iesvdm;
+package org.iesvdm.dominio;
 
 
 import static org.assertj.core.api.Assertions.*;

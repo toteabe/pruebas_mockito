@@ -1,4 +1,4 @@
-package org.iesvdm;
+package org.iesvdm.dominio;
 
 import org.iesvdm.dominio.Person;
 import org.iesvdm.dominio.User;

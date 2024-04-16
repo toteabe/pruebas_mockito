@@ -1,4 +1,4 @@
-package org.iesvdm;
+package org.iesvdm.dominio;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
