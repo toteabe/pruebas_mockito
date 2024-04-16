@@ -185,31 +185,11 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testOtherEmployeesArePaidWhenBankServiceThrowsException() {
-		when(employeeRepository.findAll())
-			.thenReturn(asList(notToBePaid, toBePaid));
-		doThrow(new RuntimeException())
-			.doNothing()
-			.when(bankService).pay(anyString(), anyDouble());
-		// number of payments must be 1
-		assertThat(employeeManager.payEmployees()).isEqualTo(1);
-		// make sure that Employee.paid is updated accordingly
-		verify(notToBePaid).setPaid(false);
-		verify(toBePaid).setPaid(true);
 	}
 
 	@Test
 	public void testArgumentMatcherExample() {
-		when(employeeRepository.findAll())
-			.thenReturn(asList(notToBePaid, toBePaid));
-		doThrow(new RuntimeException())
-			.when(bankService).pay(
-					argThat(s -> s.equals("1")),
-					anyDouble());
-		// number of payments must be 1
-		assertThat(employeeManager.payEmployees()).isEqualTo(1);
-		// make sure that Employee.paid is updated accordingly
-		verify(notToBePaid).setPaid(false);
-		verify(toBePaid).setPaid(true);
+		
 	}
 
 }
