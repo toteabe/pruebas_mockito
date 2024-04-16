@@ -185,31 +185,27 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testOtherEmployeesArePaidWhenBankServiceThrowsException() {
-		when(employeeRepository.findAll())
-			.thenReturn(asList(notToBePaid, toBePaid));
-		doThrow(new RuntimeException())
-			.doNothing()
-			.when(bankService).pay(anyString(), anyDouble());
-		// number of payments must be 1
-		assertThat(employeeManager.payEmployees()).isEqualTo(1);
-		// make sure that Employee.paid is updated accordingly
-		verify(notToBePaid).setPaid(false);
-		verify(toBePaid).setPaid(true);
+
 	}
 
+
+	/**
+	 * Descripcion del test:
+	 * 	Crea un stub when-thenReturn para employeeRepository.findAll que devuelva
+	 * 	una coleccion 2 Employee con el spy de atributo de la clase notToBePaid y toBePaid.
+	 * 	Seguidamente, crea un stub con encademaniento para 2 llamadas doThrow-when emplea argThat
+	 *  argThat(s -> s.equals("1")), anyDouble como firma de invocacion en el stub para pay
+	 * 	de modo que en la primera invocacion de pay (para notToBePaid) se lance una RuntimeException
+	 * 	y en la segunda invocacion de pay (para toBePaid) no haga nada. El metodo pay acepta cualquier argumento
+	 * 	indicado mediante ArgumentMatcher any.
+	 * 	Comprueba que al invocar employeeManager.payEmployees se paga a solo 1 Employee.
+	 *  A continuacion, verifica las interacciones (verify) sobre el spy notToBePaid primer mock de la coleccion
+	 *  para el que se lanza la RuntimeException y el spy toBePaid segundo mock de la coleccion que si recibe el pago
+	 *  chequeando la interaccion con el metodo setPaid a false y true respectivamente.
+	 */
 	@Test
 	public void testArgumentMatcherExample() {
-		when(employeeRepository.findAll())
-			.thenReturn(asList(notToBePaid, toBePaid));
-		doThrow(new RuntimeException())
-			.when(bankService).pay(
-					argThat(s -> s.equals("1")),
-					anyDouble());
-		// number of payments must be 1
-		assertThat(employeeManager.payEmployees()).isEqualTo(1);
-		// make sure that Employee.paid is updated accordingly
-		verify(notToBePaid).setPaid(false);
-		verify(toBePaid).setPaid(true);
+
 	}
 
 }
