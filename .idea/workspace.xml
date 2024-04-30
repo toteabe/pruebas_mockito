@@ -8,12 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c399beb-7381-4adb-ab43-564baa14b56b" name="Changes" comment="Actualizaciones a la teoría de mockito">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/iesvdm/employee/EmployeeInMemoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/iesvdm/employee/EmployeeInMemoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeInMemoryRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeInMemoryRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeManagerTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="5c399beb-7381-4adb-ab43-564baa14b56b" name="Changes" comment="Test mockito" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -208,7 +203,7 @@
       <workItem from="1714390374776" duration="2000" />
       <workItem from="1714400121114" duration="4304000" />
       <workItem from="1714477458259" duration="3544000" />
-      <workItem from="1714488314754" duration="1181000" />
+      <workItem from="1714488314754" duration="1345000" />
     </task>
     <task id="LOCAL-00001" summary="inicial">
       <option name="closed" value="true" />
@@ -242,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713253920554</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Test mockito">
+      <option name="closed" value="true" />
+      <created>1714489591048</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714489591048</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +278,8 @@
     <MESSAGE value="inicial" />
     <MESSAGE value="teoría de mockito" />
     <MESSAGE value="Actualizaciones a la teoría de mockito" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualizaciones a la teoría de mockito" />
+    <MESSAGE value="Test mockito" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test mockito" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
