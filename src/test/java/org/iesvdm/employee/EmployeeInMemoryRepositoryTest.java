@@ -36,7 +36,12 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositoryFindAll() {
-
+		 Employee e1 = new Employee ( "a", 0 );
+		 Employee e2 = new Employee ("b", 0);
+		 employees.add (e1);
+		 employees.add (e2);
+		System.out.println (employeeRepository.findAll ());
+		assertThat ( employeeRepository.findAll () ).hasSize ( 2 );
 	}
 
 	/**
@@ -47,7 +52,10 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositorySaveNewEmployee() {
-
+		Employee e1 = new Employee ( "a", 0 );
+		int s = employees.size ();
+		employeeRepository.save ( e1 );
+		assertThat ( employees.size () ).isGreaterThan ( s );
 	}
 
 	/**
@@ -60,7 +68,11 @@ public class EmployeeInMemoryRepositoryTest {
 	 * los contiene actualizados.
 	 */
 	@Test
-	public void testEmployeeRepositorySaveExistingEmployee() {
-
+	public void testEmployeeRepositorySaveExistingEmployee(){
+		Employee e1 = new Employee ( "a", 0 );
+		employeeRepository.save ( e1 );
+		int s = employees.size ();
+		employeeRepository.save ( e1 );
+		assertThat ( employees.size () ).isEqualTo ( s );
 	}
 }

@@ -17,9 +17,7 @@ public class EmployeeInMemoryRepository implements EmployeeRepository {
 	}
 
 	@Override
-	public List<Employee> findAll() {
-		return employees;
-	}
+	public List<Employee> findAll() {return employees;}
 
 	@Override
 	public Employee save(Employee employee) {
