@@ -1,6 +1,5 @@
 package org.iesvdm.employee;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
@@ -8,12 +7,11 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class EmployeeManagerTest {
 
@@ -56,7 +54,8 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testPayEmployeesReturnZeroWhenNoEmployeesArePresent() {
-
+		when ( employeeRepository.findAll () ).thenReturn ( List.of () );
+		assertThat ( employeeManager.payEmployees () ).isZero ();
 	}
 
 	/**
@@ -71,7 +70,11 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testPayEmployeesReturnOneWhenOneEmployeeIsPresentAndBankServicePayPaysThatEmployee() {
-
+		List<Employee> oneEmployee = new ArrayList<> ();
+		oneEmployee.add ( toBePaid );
+		when ( employeeRepository.findAll () ).thenReturn (oneEmployee);
+		assertThat ( employeeManager.payEmployees () ).isOne ();
+		verify ( bankService).pay ( "2", 2000 );
 	}
 
 
@@ -88,7 +91,17 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testPayEmployeesWhenSeveralEmployeeArePresent() {
-
+		List<Employee> twoEmployees = new ArrayList<> ();
+		Employee e = new Employee ( "1", 1000 );
+		Employee e2 = new Employee("2", 2000);
+		twoEmployees.add ( e );
+		twoEmployees.add ( e2 );
+		when ( employeeRepository.findAll () ).thenReturn (twoEmployees);
+		assertThat ( employeeManager.payEmployees () ).isEqualTo (2);
+		InOrder inOrder = inOrder(bankService, employeeRepository);
+		inOrder.verify (bankService).pay ( "1", 1000 );
+		inOrder.verify (bankService).pay ( "2", 2000 );
+		inOrder.verifyNoMoreInteractions ();
 	}
 
 	/**
@@ -103,7 +116,17 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testPayEmployeesInOrderWhenSeveralEmployeeArePresent() {
-
+		List<Employee> twoEmployees = new ArrayList<> ();
+		Employee e = new Employee ( "1", 1000 );
+		Employee e2 = new Employee("2", 2000);
+		twoEmployees.add ( e );
+		twoEmployees.add ( e2 );
+		when ( employeeRepository.findAll () ).thenReturn (twoEmployees);
+		assertThat ( employeeManager.payEmployees () ).isEqualTo (2);
+		InOrder inOrder = inOrder(bankService, employeeRepository);
+		inOrder.verify (bankService).pay ( "1", 1000 );
+		inOrder.verify (bankService).pay ( "2", 2000 );
+		inOrder.verifyNoMoreInteractions ();
 	}
 
 	/**
@@ -116,7 +139,18 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testExampleOfInOrderWithTwoMocks() {
-
+		Employee employee = new Employee("1", 1000);
+		Employee employee2 = new Employee("2", 2000);
+		ArrayList<Employee> employees = new ArrayList<>();
+		employees.add(employee);
+		employees.add(employee2);
+		when(employeeRepository.findAll()).thenReturn(employees);
+		assertThat(employeeManager.payEmployees()).isEqualTo(2);
+		InOrder inOrder = inOrder(bankService,employeeRepository);
+		inOrder.verify(employeeRepository).findAll();
+		inOrder.verify(bankService, times(1)).pay("1",1000);
+		inOrder.verify(bankService, times(1)).pay("2",2000);
+		inOrder.verifyNoMoreInteractions();
 	}
 
 
@@ -135,7 +169,16 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testExampleOfArgumentCaptor() {
-
+		Employee employee = new Employee("1", 1000);
+		Employee employee2 = new Employee("2", 2000);
+		ArrayList<Employee> employees = new ArrayList<>();
+		employees.add(employee);
+		employees.add(employee2);
+		when(employeeRepository.findAll()).thenReturn(employees);
+		assertThat(employeeManager.payEmployees()).isEqualTo(2);
+		verify(bankService,times(2)).pay(idCaptor.capture(),amountCaptor.capture());
+		assertThat(idCaptor.getValue()).isEqualTo("2");
+		assertThat(amountCaptor.getValue()).isEqualTo(2000);
 	}
 
 	/**
@@ -149,7 +192,13 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testEmployeeSetPaidIsCalledAfterPaying() {
-
+		ArrayList<Employee> employees = new ArrayList<>();
+		employees.add(toBePaid);
+		when(employeeRepository.findAll()).thenReturn(employees);
+		assertThat(employeeManager.payEmployees()).isEqualTo(1);
+		InOrder inOrder = inOrder(bankService,toBePaid);
+		inOrder.verify(bankService).pay(toBePaid.getId(),toBePaid.getSalary());
+		inOrder.verify(toBePaid).setPaid(true);
 	}
 
 
@@ -167,7 +216,10 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testPayEmployeesWhenBankServiceThrowsException() {
-
+		when(employeeRepository.findAll()).thenReturn(Collections.singletonList(notToBePaid));
+		doThrow(new RuntimeException()).when(bankService).pay(anyString(),anyDouble());
+		assertThat(employeeManager.payEmployees()).isEqualTo(0);
+		verify(notToBePaid).setPaid(false);
 	}
 
 	/**
@@ -185,6 +237,14 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testOtherEmployeesArePaidWhenBankServiceThrowsException() {
+		ArrayList<Employee> employees = new ArrayList<>();
+		employees.add(notToBePaid);
+		employees.add(toBePaid);
+		when(employeeRepository.findAll()).thenReturn(employees);
+		doThrow(new RuntimeException()).doNothing().when(bankService).pay(anyString(),anyDouble());
+		assertThat(employeeManager.payEmployees()).isEqualTo(1);
+		verify(notToBePaid).setPaid(false);
+		verify(toBePaid).setPaid(true);
 	}
 
 
@@ -204,7 +264,13 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testArgumentMatcherExample() {
-
+		ArrayList<Employee> employees = new ArrayList<>();
+		employees.add(notToBePaid);
+		employees.add(toBePaid);
+		when(employeeRepository.findAll()).thenReturn(employees);
+		doThrow(new RuntimeException()).doNothing().when(bankService).pay(argThat(s -> s.equals("1")),anyDouble());
+		assertThat(employeeManager.payEmployees()).isEqualTo(1);
+		verify(notToBePaid).setPaid(false);
+		verify(toBePaid).setPaid(true);
 	}
-
 }
