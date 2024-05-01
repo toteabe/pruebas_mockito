@@ -1,12 +1,10 @@
 package org.iesvdm.employee;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +34,12 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositoryFindAll() {
-
+		Employee e1 = new Employee ( "a", 0 );
+		Employee e2 = new Employee ("b", 0);
+		employees.add (e1);
+		employees.add (e2);
+		System.out.println (employeeRepository.findAll ());
+		assertThat ( employeeRepository.findAll () ).hasSize ( 2 );
 	}
 
 	/**
@@ -47,7 +50,10 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositorySaveNewEmployee() {
-
+		Employee e1 = new Employee ( "a", 0 );
+		int s = employees.size ();
+		employeeRepository.save ( e1 );
+		assertThat ( employees.size () ).isGreaterThan ( s );
 	}
 
 	/**
@@ -61,6 +67,10 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositorySaveExistingEmployee() {
-
+		Employee e1 = new Employee ( "a", 0 );
+		employeeRepository.save ( e1 );
+		int s = employees.size ();
+		employeeRepository.save ( e1 );
+		assertThat ( employees.size () ).isEqualTo ( s );
 	}
 }
