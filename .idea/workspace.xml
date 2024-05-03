@@ -9,7 +9,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c399beb-7381-4adb-ab43-564baa14b56b" name="Changes" comment="Actualizaciones a la teoría de mockito">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeInMemoryRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeInMemoryRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/iesvdm/employee/EmployeeManagerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +47,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/usuario/IdeaProjects/proyecto_mockito/src",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/ivanluque/dev/ent_sis/java/pruebas_mockito",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,7 +69,7 @@
       <recent name="org.iesvdm.dominio" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ArgumentMatcherTest.anyArgumentTest">
+  <component name="RunManager">
     <configuration name="ArgumentMatcherTest.anyAndAdditionalArgumentMatchersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proyecto_mockito" />
       <extension name="coverage">
@@ -99,6 +102,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EmployeeManagerTest.testExampleOfInOrderWithTwoMocks" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyecto_mockito" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.iesvdm.employee.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.iesvdm.employee" />
+      <option name="MAIN_CLASS_NAME" value="org.iesvdm.employee.EmployeeManagerTest" />
+      <option name="METHOD_NAME" value="testExampleOfInOrderWithTwoMocks" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MockMethodsTest.whenMockMethodCallIsConfiguredToCallTheRealMethod_thenRealMethodIsCalled" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="proyecto_mockito" />
       <extension name="coverage">
@@ -110,22 +129,6 @@
       <option name="PACKAGE_NAME" value="org.iesvdm.dominio" />
       <option name="MAIN_CLASS_NAME" value="org.iesvdm.dominio.MockMethodsTest" />
       <option name="METHOD_NAME" value="whenMockMethodCallIsConfiguredToCallTheRealMethod_thenRealMethodIsCalled" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MockVsSpyTest.whenThenReturn" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="proyecto_mockito" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.iesvdm.dominio.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.iesvdm.dominio" />
-      <option name="MAIN_CLASS_NAME" value="org.iesvdm.dominio.MockVsSpyTest" />
-      <option name="METHOD_NAME" value="whenThenReturn" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -149,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.EmployeeManagerTest.testExampleOfInOrderWithTwoMocks" />
         <item itemvalue="JUnit.ArgumentMatcherTest.anyArgumentTest" />
         <item itemvalue="JUnit.ArgumentMatcherTest.anyAndAdditionalArgumentMatchersTest" />
         <item itemvalue="JUnit.VerifyTest.givenInteractionsInOrder_whenVerifyingOrderOfInteractions_thenCorrect" />
         <item itemvalue="JUnit.MockMethodsTest.whenMockMethodCallIsConfiguredToCallTheRealMethod_thenRealMethodIsCalled" />
-        <item itemvalue="JUnit.MockVsSpyTest.whenThenReturn" />
       </list>
     </recent_temporary>
   </component>
@@ -171,6 +174,7 @@
       <workItem from="1712905273657" duration="2892000" />
       <workItem from="1712940548762" duration="12792000" />
       <workItem from="1713177366619" duration="8742000" />
+      <workItem from="1714718354869" duration="175000" />
     </task>
     <task id="LOCAL-00001" summary="inicial">
       <option name="closed" value="true" />

@@ -36,7 +36,15 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositoryFindAll() {
+		Employee e1 = new Employee("Ivan", 1000);
+		Employee e2 = new Employee("Manuel", 2000);
 
+		employees.add(e1);
+		employees.add(e2);
+
+		List<Employee> empleados = employeeRepository.findAll();
+
+		assertThat(empleados).containsExactly(e1, e2);
 	}
 
 	/**
@@ -47,7 +55,11 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositorySaveNewEmployee() {
+		Employee e = new Employee("Ivan", 1000);
 
+		employeeRepository.save(e);
+
+		assertThat(employees).containsExactlyInAnyOrder(e);
 	}
 
 	/**
@@ -61,6 +73,17 @@ public class EmployeeInMemoryRepositoryTest {
 	 */
 	@Test
 	public void testEmployeeRepositorySaveExistingEmployee() {
+		Employee e1 = new Employee("Ivan", 1000);
+		Employee e2 = new Employee("Manuel", 2000);
 
+		employees.add(e1);
+		employees.add(e2);
+
+		e1.setSalary(2000);
+
+		employeeRepository.save(e1);
+
+		assertThat(employees).containsExactlyInAnyOrder(e1, e2);
+		assertThat(e1.getSalary()).isEqualTo(2000);
 	}
 }
