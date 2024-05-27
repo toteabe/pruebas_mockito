@@ -1,6 +1,8 @@
 package org.iesvdm.employee;
 
+
 import static java.util.Arrays.asList;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
@@ -14,6 +16,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.*;
+
+import java.util.Collections;
+import java.util.Collections;
+import java.util.List;
 
 public class EmployeeManagerTest {
 
@@ -60,6 +72,18 @@ public class EmployeeManagerTest {
 	@Test
 	public void testPayEmployeesReturnZeroWhenNoEmployeesArePresent() {
 
+		//Al llamar findAll nos devolvera una lista vacia
+		when(employeeRepository.findAll()).thenReturn(Collections.emptyList());
+
+
+		//llamamos a la funcion
+		employeeManager.payEmployees();
+
+		//verificamos que findAll ha sido llamado una sola vez
+		verify(employeeRepository, times(1)).findAll();
+
+		//comprobamos que el int devuelto por la funcion sea 0, ya que no hay empleados
+		assertThat(employeeManager.payEmployees()).isEqualTo(0);
 	}
 
 	/**
@@ -75,6 +99,19 @@ public class EmployeeManagerTest {
 	@Test
 	public void testPayEmployeesReturnOneWhenOneEmployeeIsPresentAndBankServicePayPaysThatEmployee() {
 
+		//Al llamar findAll nos devuelve una lista con un solo empleado
+		when(employeeRepository.findAll()).thenReturn(Collections.singletonList(toBePaid));
+
+		//llamamos a pay
+		employeeManager.payEmployees();
+		verify(employeeRepository, times(1)).findAll();
+		//verificamos que .pay(toBePaid) ha sido llamado una sola vez por ese empleado
+		verify(bankService, times(1)).pay(toBePaid.getId(), toBePaid.getSalary());
+
+
+		//comprobamos que el salario sea igual a 2000, y que IsPaid es verdadero
+		assertThat(toBePaid.getSalary()).isEqualTo(2000);
+		assertThat(toBePaid.isPaid()).isTrue();
 	}
 
 
@@ -92,6 +129,20 @@ public class EmployeeManagerTest {
 	@Test
 	public void testPayEmployeesWhenSeveralEmployeeArePresent() {
 
+		//Al llamar a .findAll se devolveran esos dos empleados como una lista
+		when(employeeRepository.findAll()).thenReturn(asList(toBePaid, notToBePaid));
+
+		//comprobamos que el int devuelto por payEmployees sea 2
+		assertThat(employeeManager.payEmployees()).isEqualTo(2);
+
+		//comprobamos que se llama .pay 1 vez con los datos del primer empleado
+		verify(bankService, times(1)).pay(toBePaid.getId(), toBePaid.getSalary());
+
+		//comprobamos que se llama .pay 1 vez con los datos del segundo empleado
+		verify(bankService, times(1)).pay(notToBePaid.getId(), notToBePaid.getSalary());
+
+		//comprobamos que no hay mas interacciones con este metodo, ya que no hay mas empleados
+		verifyNoMoreInteractions(bankService);
 	}
 
 	/**
@@ -107,6 +158,25 @@ public class EmployeeManagerTest {
 	@Test
 	public void testPayEmployeesInOrderWhenSeveralEmployeeArePresent() {
 
+
+		//Al llamar findALl que nos devuelva una lista de 2 empleados, y que payEmployee devuelva ese numero
+		when(employeeRepository.findAll()).thenReturn(asList(toBePaid, notToBePaid));
+		assertThat(employeeManager.payEmployees()).isEqualTo(2);
+
+
+		//instanciamos in order de bankService
+		InOrder inOrder = inOrder(bankService);
+
+		//comprobamos que se hace este primero
+		inOrder.verify(bankService).pay(toBePaid.getId(), toBePaid.getSalary());
+
+		//comprobamos que se hace este despues
+		inOrder.verify(bankService).pay(notToBePaid.getId(), notToBePaid.getSalary());
+
+		//comprobamos que no hay mas interacciones
+		verifyNoMoreInteractions(bankService);
+
+
 	}
 
 	/**
@@ -119,6 +189,23 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testExampleOfInOrderWithTwoMocks() {
+
+		//Al llamar findAll nos devuelve una lista de dos empleados
+		when(employeeRepository.findAll()).thenReturn(asList(toBePaid, notToBePaid));
+		assertThat(employeeManager.payEmployees()).isEqualTo(2);
+
+		//Instanciamos in Order
+		InOrder inOrder = inOrder(bankService, employeeRepository);
+
+		//Comprobamos que se llama una vez a findAll
+		inOrder.verify(employeeRepository).findAll();
+
+		//Luego se llama al empleado1 y luego al 2
+		inOrder.verify(bankService).pay(toBePaid.getId(), toBePaid.getSalary());
+		inOrder.verify(bankService).pay(notToBePaid.getId(), notToBePaid.getSalary());
+
+		//Comprobamos que no hay mas interacciones
+		verifyNoMoreInteractions(bankService);
 
 	}
 
@@ -138,6 +225,26 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testExampleOfArgumentCaptor() {
+		when(employeeRepository.findAll()).thenReturn(asList(toBePaid, notToBePaid));
+		assertThat(employeeManager.payEmployees()).isEqualTo(2);
+
+		//Captor para id y amount
+		ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Double> amountCaptor = ArgumentCaptor.forClass(Double.class);
+
+		//estos metodos se llaman dos veces
+		verify(bankService, times(2)).pay(idCaptor.capture(), amountCaptor.capture());
+		List<String> idCapturadores = idCaptor.getAllValues();
+		List<Double> amountCapturadores = amountCaptor.getAllValues();
+
+		/*
+		assertThat(idCapturadores.size()).isEqualTo(2);
+		assertThat(amountCapturadores.size()).isEqualTo(2);
+		*/
+
+		/* comprobamos que contienen los elementos */
+		assertThat(idCapturadores).containsExactly(toBePaid.getId(), notToBePaid.getId());
+		assertThat(amountCapturadores).containsExactly(toBePaid.getSalary(), notToBePaid.getSalary());
 
 	}
 
@@ -153,6 +260,14 @@ public class EmployeeManagerTest {
 	@Test
 	public void testEmployeeSetPaidIsCalledAfterPaying() {
 
+		when(employeeRepository.findAll()).thenReturn(Collections.singletonList(toBePaid));
+
+		employeeManager.payEmployees();
+		assertThat(employeeManager.payEmployees()).isEqualTo(1);
+		InOrder inOrder = inOrder(bankService, toBePaid);
+
+		inOrder.verify(bankService).pay(toBePaid.getId(), toBePaid.getSalary());
+		inOrder.verify(toBePaid).setPaid(true);
 	}
 
 
@@ -171,6 +286,11 @@ public class EmployeeManagerTest {
 	@Test
 	public void testPayEmployeesWhenBankServiceThrowsException() {
 
+		when(employeeRepository.findAll()).thenReturn(Collections.singletonList(notToBePaid));
+		doThrow(new RuntimeException()).when(bankService).pay(anyString(), anyDouble());
+		assertThat(employeeManager.payEmployees()).isEqualTo(0);
+
+		verify(notToBePaid).setPaid(false);
 	}
 
 	/**
@@ -188,6 +308,12 @@ public class EmployeeManagerTest {
 	 */
 	@Test
 	public void testOtherEmployeesArePaidWhenBankServiceThrowsException() {
+		when(employeeRepository.findAll()).thenReturn(asList(notToBePaid, toBePaid));
+		doThrow(new RuntimeException()).doNothing().when(bankService).pay(anyString(), anyDouble());
+
+		assertThat(employeeManager.payEmployees()).isEqualTo(1);
+		verify(notToBePaid).setPaid(false);
+		verify(toBePaid).setPaid(true);
 	}
 
 
@@ -208,6 +334,11 @@ public class EmployeeManagerTest {
 	@Test
 	public void testArgumentMatcherExample() {
 
+		when(employeeRepository.findAll()).thenReturn(asList(notToBePaid, toBePaid));
+		doThrow(new RuntimeException()).doNothing().when(bankService).pay(argThat(s -> s.equals("1")), anyDouble());
+		assertThat(employeeManager.payEmployees()).isEqualTo(1);
+		verify(notToBePaid).setPaid(false);
+		verify(toBePaid).setPaid(true);
 	}
 
 }
