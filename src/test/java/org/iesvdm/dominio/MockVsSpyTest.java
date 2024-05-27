@@ -26,7 +26,6 @@ public class MockVsSpyTest
     @Test
     void createSpyFromEmptyConstructor(){
         User user = Mockito.spy(new User());
-
         assertThat(user.getUsername()).isEqualTo("user");
         assertThat(user.getPassword()).isNull();
         assertThat(user.getRole()).isNull();

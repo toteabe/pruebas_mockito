@@ -26,7 +26,10 @@ public class EmployeeManagerTest {
 	/**
 	 * Explica en este comentario que efecto tiene
 	 * esta anotacion @InjectMocks
+	 * Crea un objeto simulado de la clase e inyecta los objetos simulados
+	 *  en todas las dependencias que tengas @Mock y @Spy (si aplica el caso(
 	 */
+
 	@InjectMocks
 	private EmployeeManager employeeManager;
 
